@@ -1,34 +1,44 @@
-new Text('Frappy Brrr').addTo(stage).attr({
-  fontFamily: 'Arial',
-  fontSize: '20',
-  textFillColor: 'red',
-  textStrokeColor: 'yellow',
-  textStrokeWidth: 0.5
+var intro = new Text('frappy brrr\n',
+					'type a for jump\n');
+intro.addTo(stage).attr({
+  fontFamily: 'Arial, sans-serif',
+  fontSize: '14',
+  textFillColor: 'white',
 });
 
-
-var highpipe = new Rect (300,0,60,200);
+var highpipe = new Rect (250,0,50,400);
 highpipe.addTo(stage);
 highpipe.fill('green');
 
-var lowpipe = new Rect (300,800,60,200);
-highpipe.addTo(stage);
-highpipe.fill('green');
+var lowpipe = new Rect (250,600,50,400);
+lowpipe.addTo(stage);
+lowpipe.fill('green');
 
-
-var bird = new Circle(20,240,15);
+var bird = new Circle(15,500,15);
 bird.addTo(stage);
 bird.fill('white');
+bird.x = 15;
+bird.y = 500;
 
-var motion = new Animation('10s',{
-	x:600
 
+var gravity = new Animation('8s',{
+	y:800
+});
+gravity.addSubjects([bird]);
+gravity.play();
+
+
+var jump = new Animation('1s',{
+	y:0
 });
 
-stage.on('key', function(e) {
-    bird.fill('white');
-  });
+jump.addSubjects([bird]);
 
-motion.addSubjects([bird]);
-motion.play();
+stage.on('keydown', function(e) {
+    if(e.keyCode == 65){
+    	console.log('hit');
+    	jump.play();
+    	console.log(bird.y);
+    }
+  });
 
