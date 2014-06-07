@@ -13,14 +13,23 @@ var bird = new Circle(15,200,5);
 bird.addTo(stage);
 bird.fill('#FFFF00');
 
-function persist(){
-	stage.on('tick',function(e){
-		bird._attributes.x += 10;
+var increment = 100;
+
+function persist(x,y){
+	bird.attr({
+		x: x+1,
+		y: y+1
 	});
+	console.log(bird._attributes.x);
 }
 
-var counter = 0;
-while(counter<40){
-	persist();
-	++counter;
-}
+/*
+setInterval(function(){this.bird.attr.x = 500;
+	console.log(bird.attr.x);
+	stage.width = 800;
+	stage.height = 800;
+	},10000);*/
+
+stage.on('tick', function() {
+    persist(bird._attributes.x,bird._attributes.y);
+});
