@@ -13,12 +13,14 @@ var bird = new Circle(15,200,5);
 bird.addTo(stage);
 bird.fill('#FFFF00');
 
-console.log(bird.x);
+function persist(){
+	stage.on('tick',function(e){
+		bird._attributes.x += 10;
+	});
+}
 
-//keypress 'a'
-stage.on('keydown',function(e){
-    if(e.keyCode == 65){	
-    	bird.attr.y -= 10;
-    }
-});
-
+var counter = 0;
+while(counter<40){
+	persist();
+	++counter;
+}
