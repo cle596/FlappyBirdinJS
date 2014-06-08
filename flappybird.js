@@ -1,15 +1,12 @@
 // 500 x 500
 
 var bg = new Rect (0,0,500,500);
-bg.fill('green');
+bg.fill('pink');
 bg.addTo(stage);
 
-var title = new Text();
-title.addTo(stage);
-title.attr({
-	text: "fappy brrr press a",
-	textFillColor: 'yellow'
-});
+
+
+
 
 //highpipe
 var highpipe = new Rect (250,0,20,200);
@@ -18,6 +15,10 @@ highpipe.attr({
 });
 highpipe.addTo(stage);
 highpipe.fill('#00FFFF');
+
+
+
+//setTimeout(function(){init_highpipe();},3000);
 
 //lowpipe
 var lowpipe = new Rect (250,500,20,-200);
@@ -28,22 +29,30 @@ lowpipe.addTo(stage);
 lowpipe.fill('#00FFFF');
 
 //bird
-var bird = new Circle(15,200,5);
+var bird = new Circle(15,200,10);
 bird.addTo(stage);
 bird.fill('#FFFF00');
+
+
+var title = new Text();
+title.addTo(stage);
+title.attr({
+	text: "fappy brrr press a",
+	textFillColor: 'black'
+});
 
 //console.log(Object.getOwnPropertyNames(bird.attr).sort());
 
 //var increment = 100;
 
 function rightedge(){
-	if(bird._attributes.x + 5 >= 500 ){
+	if(bird._attributes.x + 10 >= 500 ){
 		//console.log("right edge touched");
 	}
 }
 
 function bottomedge(){
-	if(bird._attributes.y + 5 >= 500 ){
+	if(bird._attributes.y + 10 >= 500 ){
 		//console.log("bottom edge touched");
 	}
 }
@@ -56,9 +65,19 @@ function persist(x,y){
 	//console.log(bird._attributes.x);
 }
 
+function pipe_persist(x,y){
+	highpipe.attr({
+		x: x-2
+	});
+	lowpipe.attr({
+		x: x-2
+	});
+	//console.log(bird._attributes.x);
+}
+
 function jump(x,y){
 	bird.attr({
-		x: x,
+		x: x+3,
 		y: y-30
 	});
 	//console.log(bird._attributes.x);
@@ -72,6 +91,7 @@ setInterval(function(){this.bird.attr.x = 500;
 
 stage.on('tick', function() {
     persist(bird._attributes.x,bird._attributes.y);
+    pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
     rightedge();
     bottomedge();
 });
