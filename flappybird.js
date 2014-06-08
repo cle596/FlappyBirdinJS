@@ -63,6 +63,16 @@ title.attr({
 	textFillColor: 'black'
 });
 
+function topedge(){
+	if(bird._attributes.y <= 0 ){
+		//console.log("top edge touched");
+		title.attr({
+			text: "gemova",
+		});
+		gamestate = 1;
+	}
+}
+
 function rightedge(){
 	if(bird._attributes.x + 10 >= 500 ){
 		//console.log("right edge touched");
@@ -138,6 +148,7 @@ stage.on('tick', function() {
     	pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
     	pipe2_persist(highpipe2._attributes.x,highpipe2._attributes.y);
     	pipe3_persist(highpipe3._attributes.x,highpipe3._attributes.y);
+	topedge();
     	rightedge();
     	bottomedge();
 	}
