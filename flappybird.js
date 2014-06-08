@@ -17,12 +17,19 @@ var increment = 100;
 
 function persist(x,y){
 	bird.attr({
-		x: x+1,
-		y: y+1
+		x: x+3,
+		y: y+2
 	});
-	console.log(bird._attributes.x);
+	//console.log(bird._attributes.x);
 }
 
+function jump(x,y){
+	bird.attr({
+		x: x,
+		y: y-30
+	});
+	//console.log(bird._attributes.x);
+}
 /*
 setInterval(function(){this.bird.attr.x = 500;
 	console.log(bird.attr.x);
@@ -32,4 +39,13 @@ setInterval(function(){this.bird.attr.x = 500;
 
 stage.on('tick', function() {
     persist(bird._attributes.x,bird._attributes.y);
+});
+
+
+stage.on('keydown', function(e) {
+	//onsole.log(e.keyCode);
+	if(e.keyCode == 65) {
+		//console.log("pressing a");
+    	jump(bird._attributes.x,bird._attributes.y);
+	}
 });
