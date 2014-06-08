@@ -56,12 +56,14 @@ title.attr({
 function rightedge(){
 	if(bird._attributes.x + 10 >= 500 ){
 		//console.log("right edge touched");
+		gamestate = 1;
 	}
 }
 
 function bottomedge(){
 	if(bird._attributes.y + 10 >= 500 ){
 		//console.log("bottom edge touched");
+		gamestate = 1;
 	}
 }
 
@@ -106,19 +108,23 @@ function pipe3_persist(x,y){
 
 function jump(x,y){
 	bird.attr({
-		x: x+3,
-		y: y-30
+		x: x + 5,
+		y: y - 40
 	});
 	//console.log(bird._attributes.x);
 }
 
+var gamestate = 0;
+
 stage.on('tick', function() {
-    persist(bird._attributes.x,bird._attributes.y);
-    pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
-    pipe2_persist(highpipe2._attributes.x,highpipe2._attributes.y);
-    pipe3_persist(highpipe3._attributes.x,highpipe3._attributes.y);
-    rightedge();
-    bottomedge();
+	if( gamestate == 0 ){
+    	persist(bird._attributes.x,bird._attributes.y);
+    	pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
+    	pipe2_persist(highpipe2._attributes.x,highpipe2._attributes.y);
+    	pipe3_persist(highpipe3._attributes.x,highpipe3._attributes.y);
+    	rightedge();
+    	bottomedge();
+	}
 });
 
 stage.on('keydown', function(e) {
