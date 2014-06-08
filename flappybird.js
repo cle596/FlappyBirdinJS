@@ -2,15 +2,8 @@ var bg = new Rect (0,0,500,500);
 bg.fill('pink');
 bg.addTo(stage);
 
-//highpipe
-
-/*function highpipe() {
-	this.make = makehighpipe;
-}
-*/
-
 function makehighpipe(){
-	return new Rect (250,0,20,200)
+	return new Rect (150,0,20,200)
 	.attr({
 		height: Math.floor(Math.random() * 250)
 	})
@@ -19,23 +12,33 @@ function makehighpipe(){
 }
 
 var highpipe = makehighpipe();
+var highpipe2 = makehighpipe();
+highpipe2.attr({
+	x: 300
+})
+var highpipe3 = makehighpipe();
+highpipe3.attr({
+	x: 450
+})
 
-/*
-var highpipe = new Rect (250,0,20,200);
-highpipe.attr({
-	height: Math.floor(Math.random() * 250)
-});
-highpipe.addTo(stage);
-highpipe.fill('#00FFFF');
-*/
+function makelowpipe(){
+	return new Rect (150,500,20,-200)
+	.attr({
+		height: -Math.floor(Math.random() * 250)
+	})
+	.addTo(stage)
+	.fill('#00FFFF');
+}
 
-//lowpipe
-var lowpipe = new Rect (250,500,20,-200);
-lowpipe.attr({
-	height: - Math.floor(Math.random() * 250)
-});
-lowpipe.addTo(stage);
-lowpipe.fill('#00FFFF');
+var lowpipe = makelowpipe();
+var lowpipe2 = makelowpipe();
+lowpipe2.attr({
+	x:300
+})
+var lowpipe3 = makelowpipe();
+lowpipe3.attr({
+	x:450
+})
 
 //bird
 var bird = new Circle(15,200,10);
@@ -65,7 +68,7 @@ function bottomedge(){
 function persist(x,y){
 	bird.attr({
 		x: x+3,
-		y: y+2
+		y: y+4
 	});
 	//console.log(bird._attributes.x);
 }
@@ -75,6 +78,27 @@ function pipe_persist(x,y){
 		x: x-2
 	});
 	lowpipe.attr({
+		x: x-2
+	});
+	//console.log(bird._attributes.x);
+}
+
+
+function pipe2_persist(x,y){
+	highpipe2.attr({
+		x: x-2
+	});
+	lowpipe2.attr({
+		x: x-2
+	});
+	//console.log(bird._attributes.x);
+}
+
+function pipe3_persist(x,y){
+	highpipe3.attr({
+		x: x-2
+	});
+	lowpipe3.attr({
 		x: x-2
 	});
 	//console.log(bird._attributes.x);
@@ -91,6 +115,8 @@ function jump(x,y){
 stage.on('tick', function() {
     persist(bird._attributes.x,bird._attributes.y);
     pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
+    pipe2_persist(highpipe2._attributes.x,highpipe2._attributes.y);
+    pipe3_persist(highpipe3._attributes.x,highpipe3._attributes.y);
     rightedge();
     bottomedge();
 });
