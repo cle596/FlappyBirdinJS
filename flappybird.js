@@ -3,12 +3,31 @@ bg.fill('pink');
 bg.addTo(stage);
 
 //highpipe
+
+/*function highpipe() {
+	this.make = makehighpipe;
+}
+*/
+
+function makehighpipe(){
+	return new Rect (250,0,20,200)
+	.attr({
+		height: Math.floor(Math.random() * 250)
+	})
+	.addTo(stage)
+	.fill('#00FFFF');
+}
+
+var highpipe = makehighpipe();
+
+/*
 var highpipe = new Rect (250,0,20,200);
 highpipe.attr({
 	height: Math.floor(Math.random() * 250)
 });
 highpipe.addTo(stage);
 highpipe.fill('#00FFFF');
+*/
 
 //lowpipe
 var lowpipe = new Rect (250,500,20,-200);
