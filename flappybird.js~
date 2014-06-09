@@ -1,7 +1,14 @@
+//var testx = Math.sin(3);
 
+//suppose a tick is 20ms
+//50 ticks is a sec
+//
+
+var gravitytime = 0;
+//var jumptime = 0;
 
 var bg = new Rect (0,100,500,500);
-bg.fill('grey');
+bg.fill('#D8D8D8');
 bg.addTo(stage);
 
 function makehighpipe(){
@@ -53,20 +60,31 @@ lowpipe3.attr({
 })
 
 //bird
-var bird = new Circle(15,200,10);
+var bird = new Circle(15,400,5);
 bird.addTo(stage);
-bird.fill('green');
+bird.fill('#2E2E2E');
 
 //title
 var title = new Text();
 title.addTo(stage);
 title.attr({
 	text: "fappy brrr press a",
-	textFillColor: 'black'
+	textFillColor: 'white'
+});
+
+var scoreval = 0;
+
+var score = new Text();
+score.addTo(stage);
+score.attr({
+	x: 470,
+	y: 570,
+	text: scoreval,
+	textFillColor: 'red'
 });
 
 function topedge(){
-	if(bird._attributes.y - 10 <= 100 ){
+	if(bird._attributes.y - 5 <= 100 ){
 		//console.log("top edge touched");
 		title.attr({
 			text: "gemova",
@@ -76,17 +94,17 @@ function topedge(){
 }
 
 function rightedge(){
-	if(bird._attributes.x + 10 >= 500 ){
+	if(bird._attributes.x + 5 >= 500 ){
 		//console.log("right edge touched");
 		title.attr({
-			text: "gemova",
+			text: "gemova"
 		});
 		gamestate = 1;
 	}
 }
 
 function bottomedge(){
-	if(bird._attributes.y + 10 >= 600 ){
+	if(bird._attributes.y + 5 >= 600 ){
 		//console.log(bg._attributes.y+bg._attributes.height);
 		//console.log("bottom edge touched");
 		title.attr({
@@ -97,9 +115,12 @@ function bottomedge(){
 }
 
 function persist(x,y){
+	//var gravitysec = gravitytime/50;
+	//stage.on('tick', function() {
+	//	++gravitytime;	
 	bird.attr({
-		x: x+3,
-		y: y+4
+		x: x+2,
+		y: y+1
 	});
 	//console.log(bird._attributes.x);
 }
@@ -136,23 +157,57 @@ function pipe3_persist(x,y){
 }
 
 function jump(x,y){
-	bird.attr({
-		x: x + 20,
-		y: y - 50
-	});
+	//var currentx = bird.attr('x');
+	//var currenty = bird.attr('y');
+
+
+		//stage.on('tick', function() {
+			//++jumptime;
+			bird.attr({
+				x: x+1,
+				y: y-30
+			});
+		//}
+	
+	//gravitytime = 0;
 	//console.log(bird._attributes.x);
+}
+
+var passstate1 = 0;
+var passstate2 = 0;
+var passstate3 = 0;
+
+function pipepasscheck(pipename){
+	if (bird._attributes.x > pipename._attributes.x){
+		++scoreval;
+		score.attr({
+			text: scoreval
+		});
+		return 1;
+	}
+	else{
+		return 0;
+	}
 }
 
 var gamestate = 0;
 
 stage.on('tick', function() {
 	//console.log(bird._attributes.y);
+	/*++gravitytime;
+	if(gravitytime % 50 == 0){
+		console.log( gravitytime/50 + " seconds");
+	}*/
 	if( gamestate == 0 ){
     	persist(bird._attributes.x,bird._attributes.y);
     	pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
     	pipe2_persist(highpipe2._attributes.x,highpipe2._attributes.y);
     	pipe3_persist(highpipe3._attributes.x,highpipe3._attributes.y);
 	topedge();
+		console.log(passstate1);
+		if(passstate1 == 0){ passstate1 = pipepasscheck(highpipe);}
+		if(passstate2 == 0) {passstate2 = pipepasscheck(highpipe2);}
+		if(passstate3 == 0){ passstate3 = pipepasscheck(highpipe3);}
     	rightedge();
     	bottomedge();
 	}
