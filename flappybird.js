@@ -1,14 +1,16 @@
-var bg = new Rect (0,0,500,500);
-bg.fill('pink');
+
+
+var bg = new Rect (0,100,500,500);
+bg.fill('grey');
 bg.addTo(stage);
 
 function makehighpipe(){
-	return new Rect (150,0,20,200)
+	return new Rect (150,100,20,200)
 	.attr({
 		height: Math.floor(Math.random() * 250)
 	})
 	.addTo(stage)
-	.fill('#00FFFF');
+	.fill('white');
 }
 
 var highpipe = makehighpipe();
@@ -32,12 +34,12 @@ function makelowpipe(number){
 	if(number==3){
 		contraheight = highpipe3.attr('height');
 	}
-	return new Rect (150,500,20,-200)
+	return new Rect (150,600,20,-200)
 	.attr({
 		height: -1 * (400 - contraheight) 
 	})
 	.addTo(stage)
-	.fill('#00FFFF');
+	.fill('white');
 }
 
 var lowpipe = makelowpipe(1);
@@ -53,18 +55,18 @@ lowpipe3.attr({
 //bird
 var bird = new Circle(15,200,10);
 bird.addTo(stage);
-bird.fill('#FFFF00');
+bird.fill('green');
 
 //title
 var title = new Text();
 title.addTo(stage);
 title.attr({
 	text: "fappy brrr press a",
-	textFillColor: 'black'
+	textFillColor: 'white'
 });
 
 function topedge(){
-	if(bird._attributes.y <= 0 ){
+	if(bird._attributes.y - 10 <= 100 ){
 		//console.log("top edge touched");
 		title.attr({
 			text: "gemova",
@@ -84,7 +86,8 @@ function rightedge(){
 }
 
 function bottomedge(){
-	if(bird._attributes.y + 10 >= 500 ){
+	if(bird._attributes.y + 10 >= 600 ){
+		//console.log(bg._attributes.y+bg._attributes.height);
 		//console.log("bottom edge touched");
 		title.attr({
 			text: "gemova",
@@ -143,6 +146,7 @@ function jump(x,y){
 var gamestate = 0;
 
 stage.on('tick', function() {
+	//console.log(bird._attributes.y);
 	if( gamestate == 0 ){
     	persist(bird._attributes.x,bird._attributes.y);
     	pipe_persist(highpipe._attributes.x,highpipe._attributes.y);
